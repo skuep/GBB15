@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name "Project")(type "KiCad")(uri "/home/sk/git/Micron-Gantry-PCB/kicad/library/Project.pretty")(options "")(descr ""))
+)

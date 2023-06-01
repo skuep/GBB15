@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "dk_PMIC-Motor-Drivers-Controllers")(type "Legacy")(uri "${KIPRJMOD}/../library/dk_PMIC-Motor-Drivers-Controllers.lib")(options "")(descr ""))
+  (lib (name "Project")(type "KiCad")(uri "${KIPRJMOD}/../library/Project.kicad_sym")(options "")(descr ""))
+)
