@@ -1,6 +1,6 @@
 {
   "board": {
-    "active_layer": 31,
+    "active_layer": 37,
     "active_layer_preset": "",
     "auto_track_width": true,
     "hidden_nets": [],
@@ -62,11 +62,11 @@
       35,
       36
     ],
-    "visible_layers": "7fc1020_80000000",
+    "visible_layers": "7fc10a0_80000005",
     "zone_display_mode": 0
   },
   "meta": {
-    "filename": "Micron-Gantry-PCB.kicad_prl",
+    "filename": "GBB15.kicad_prl",
     "version": 3
   },
   "project": {
