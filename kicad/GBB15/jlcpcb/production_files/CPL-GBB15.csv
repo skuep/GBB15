@@ -1,5 +1,5 @@
 Designator,Val,Package,Mid X,Mid Y,Rotation,Layer
-C1,100u/35V/105°C,CP_Radial_D6.3mm_P2.50mm,22.917621,4.8,0.0,top
+C1,100u/35V/105°C,CP_Radial_D6.3mm_P2.50mm,24.1,4.8,0.0,top
 C2,100n/X5R/50V,C_0603_1608Metric,-21.0,-4.8,90.0,bottom
 C3,22p/NP0,C_0603_1608Metric,6.2,5.7,90.0,bottom
 C4,22p/NP0,C_0603_1608Metric,12.0,5.7,90.0,bottom
@@ -15,7 +15,7 @@ C13,22n/X5R/50V,C_0603_1608Metric,-25.0,4.8,90.0,bottom
 C14,4.7u/X5R/10V,C_0603_1608Metric,-21.0,1.6,90.0,bottom
 C15,1u/X5R/50V,C_0805_2012Metric,-27.6,4.3,270.0,bottom
 C16,100n/X5R/50V,C_0603_1608Metric,-23.4,4.8,90.0,bottom
-C17,100u/35V/105°C,CP_Radial_D6.3mm_P2.50mm,-22.917621,-4.8,180.0,top
+C17,100u/35V/105°C,CP_Radial_D6.3mm_P2.50mm,-24.100001,-4.8,180.0,top
 C18,100n/X5R/50V,C_0603_1608Metric,-19.2,-5.7,270.0,bottom
 C21,100n/X5R/50V,C_0603_1608Metric,12.0,3.3,0.0,bottom
 C22,4.7u/X5R/10V,C_0603_1608Metric,1.1,3.6,270.0,bottom
@@ -28,14 +28,14 @@ C30,4.7u/X5R/10V,C_0603_1608Metric,-3.2,1.4,180.0,bottom
 FB1,600R@100MHz,L_0603_1608Metric,-9.3,-0.0,270.0,bottom
 FID1,Fiducial,TOOLING-HOLE,32.1,-6.0,0.0,top
 FID2,Fiducial,TOOLING-HOLE,-32.1,6.0,0.0,top
-J1,CAN_IN,Molex_Micro-Fit_3.0_43045-0412_2x02_P3.00mm_Vertical,-9.0,-2.585,0.0,top
-J2,CAN_OUT,Molex_Micro-Fit_3.0_43045-0412_2x02_P3.00mm_Vertical,-6.0,2.585,180.0,top
-J3,M0_THERM,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,15.5,-4.7,0.0,top
-J4,M1_THERM,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,-17.5,-4.7,0.0,top
-J5,Conn_01x04_Male,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,32.2,3.75,-90.0,top
-J6,Conn_01x04_Male,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,-32.2,-3.75,90.0,top
-J7,ENDSTOP1,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,17.5,4.7,180.0,top
-J8,ENDSTOP2,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,-15.5,4.7,180.0,top
+J1,CAN_IN,Molex_Micro-Fit_3.0_43045-0412_2x02_P3.00mm_Vertical,-7.5,-4.5,0.0,top
+J2,CAN_OUT,Molex_Micro-Fit_3.0_43045-0412_2x02_P3.00mm_Vertical,-7.5,4.5,180.0,top
+J3,M0_THERM,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,16.5,-5.25,0.0,top
+J4,M1_THERM,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,-16.5,-5.25,0.0,top
+J5,Conn_01x04_Male,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,31.675,-0.0,-90.0,top
+J6,Conn_01x04_Male,JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical,-31.675,-0.0,90.0,top
+J7,ENDSTOP1,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,16.5,5.25,180.0,top
+J8,ENDSTOP2,JST_PH_B2B-PH-K_1x02_P2.00mm_Vertical,-16.5,5.25,180.0,top
 J10,USB_C_Receptacle_USB2.0,TYPE-C 16PLC-H10.0,1.0,-3.2,-90.0,top
 R1,0R11,R_1206_3216Metric,29.6,-3.9,90.0,bottom
 R2,0R11,R_1206_3216Metric,29.6,3.9,270.0,bottom
@@ -61,9 +61,9 @@ R23,4.7K,R_0603_1608Metric,-13.8,5.7,90.0,bottom
 SW1,SW_Push,SW_SPST_CK_RS282G05A3,6.4,-2.2,90.0,top
 SW2,SW_Push,SW_SPST_CK_RS282G05A3,10.6,-2.2,-90.0,top
 TH1,Thermistor,R_0603_1608Metric,0.0,6.5,0.0,bottom
-U1,TMC2209-LA-T,QFN-28-1EP_5x5mm_P0.5mm_EP3.35x3.35mm,25.0,-0.0,90.0,bottom
-U2,STM32G0B1CEU6,QFN-48-1EP_7x7mm_P0.5mm_EP5.6x5.6mm,9.0,-1.7,270.0,bottom
-U3,TMC2209-LA-T,QFN-28-1EP_5x5mm_P0.5mm_EP3.35x3.35mm,-25.0,-0.0,270.0,bottom
+U1,TMC2209-LA-T,QFN-28-1EP_5x5mm_P0.5mm_EP3.35x3.35mm,25.0,-0.0,0.0,bottom
+U2,STM32G0B1CEU6,QFN-48-1EP_7x7mm_P0.5mm_EP5.6x5.6mm,9.0,-1.7,180.0,bottom
+U3,TMC2209-LA-T,QFN-28-1EP_5x5mm_P0.5mm_EP3.35x3.35mm,-25.0,-0.0,180.0,bottom
 U4,MAX3051EKA+T,SOT-23-8,-1.6,3.6,0.0,bottom
-U5,NCP730BMT330TBG,DFN-6-1EP_2x2mm_P0.65mm_EP1x1.6mm,-4.0,-0.5,0.0,bottom
+U5,NCP730BMT330TBG,DFN-6-1EP_2x2mm_P0.65mm_EP1x1.6mm,-4.0,-0.5,180.0,bottom
 Y1,Crystal_GND24,Crystal_SMD_3225-4Pin_3.2x2.5mm,9.1,5.7,180.0,bottom
