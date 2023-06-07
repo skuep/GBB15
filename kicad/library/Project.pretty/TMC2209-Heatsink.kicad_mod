@@ -1,6 +1,7 @@
 (footprint "TMC2209-Heatsink" (version 20211014) (generator pcbnew)
   (layer "F.Cu")
-  (tedit 645A830B)
+  (tedit 6480B296)
+  (attr exclude_from_pos_files exclude_from_bom)
   (fp_text reference "REF**" (at 0 -0.5 unlocked) (layer "F.SilkS")
     (effects (font (size 1 1) (thickness 0.15)))
     (tstamp 59884f46-1341-4b31-aa17-0ede3641a191)
