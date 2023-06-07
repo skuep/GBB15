@@ -356,7 +356,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "Micron-Gantry-PCB.kicad_pro",
+    "filename": "GBB15.kicad_pro",
     "version": 1
   },
   "net_settings": {
@@ -390,7 +390,7 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "../../3d/Micron-Gantry-PCB.step",
+      "step": "../../3d/GBB15.step",
       "vrml": ""
     },
     "page_layout_descr_file": ""
