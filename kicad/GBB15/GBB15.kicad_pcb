@@ -4022,7 +4022,7 @@
   (gr_text "STOP2" (at 132 86.2 270) (layer "F.SilkS") (tstamp 69a28446-60d1-4c93-9b4e-4b6169b16139)
     (effects (font (size 0.7 0.7) (thickness 0.15)))
   )
-  (gr_text "GPCB15\n" (at 150 85.4) (layer "F.SilkS") (tstamp 7707483a-0bac-425b-9a12-e34d6f19d66b)
+  (gr_text "GBB15\n" (at 150 85.4) (layer "F.SilkS") (tstamp 7707483a-0bac-425b-9a12-e34d6f19d66b)
     (effects (font (size 0.8 0.8) (thickness 0.15)) (justify left))
   )
   (gr_text "BOOT" (at 151.4 88.9) (layer "F.SilkS") (tstamp 7943fed9-f945-4448-954f-01225adb7571)
