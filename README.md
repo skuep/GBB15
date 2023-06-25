@@ -34,3 +34,67 @@ You can order these on LCSC
 | Tactile Switches         | 2   | Boot/Reset  | C255802 | https://www.lcsc.com/product-detail/Tactile-Switches_HYP-Hongyuan-Precision-1TS002E-2500-2501-CT_C255802.html |
 | Heat Sink                | 2   | Standard TMC2209 heatsink | C5250902 or C5250879 | https://www.lcsc.com/product-detail/Heat-sink-heatsink_wenhaoyongshun-D11-01-02_C5250902.html or https://www.lcsc.com/product-detail/Heat-sink-heatsink_wenhaoyongshun-F12-04-05_C5250879.html |
 | 1.5mm M.2 Thermal pad    | 1   | Cut to size 67x15mm | -- | https://www.amazon.de/-/en/Assorted-Thickness-Conductive-Silicone-Conductivity/dp/B07X38254H/ref=sr_1_11 |
+
+# Quick Guide
+1. Solder top components (order: 120R resistor (if required), switches, 4x JST PH 2.0mm, 2x JST XH2.5mm, 2x MicroFit 3.0 2x2, Capacitors & attach heatsinks
+1. Attach 1.5mm heat gap filler pad to bottom, cut to size if required using a sharp knife
+1. Poke screw holes into the gap filler pads
+1. Use M3x8mm screws to attach to bottom of gantry frame (see above)
+
+# Klipper configuration
+````
+[mcu gantry_mcu]
+canbus_interface: can0
+canbus_uuid: f7b6d9f26b4a
+
+...
+
+[temperature_sensor chamber]
+sensor_type: Generic 3950
+sensor_pin: gantry_mcu:PA1 # SMD thermistor on GBB15 PCB
+pullup_resistor: 4700
+
+[temperature_sensor Motor_A]
+sensor_type: Generic 3950
+sensor_pin: gantry_mcu:PB11 # TH_A on GBB15 PCB
+pullup_resistor: 4700
+
+[temperature_sensor Motor_B]
+sensor_type: Generic 3950
+sensor_pin: gantry_mcu:PB12 # TH_B on GBB15 PCB
+pullup_resistor: 4700
+
+[temperature_sensor gantry_temp]
+sensor_type: temperature_mcu
+sensor_mcu: gantry_mcu
+min_temp: 0
+max_temp: 100
+
+...
+
+[stepper_y]
+step_pin: gantry_mcu:PB2
+dir_pin: gantry_mcu:PB1
+enable_pin: !gantry_mcu:PB13
+endstop_pin: gantry_mcu:PA3 # this would be the STOP1 connector on GBB15 PCB
+...
+
+[tmc2209 stepper_y]
+uart_pin: gantry_mcu:PA4
+sense_resistor: 0.110
+...
+
+[stepper_x]
+step_pin: gantry_mcu:PB7
+dir_pin: gantry_mcu:PB8
+enable_pin: !gantry_mcu:PB9
+...
+
+[tmc2209 stepper_x]
+uart_pin: gantry_mcu:PB3
+sense_resistor: 0.110
+...
+
+````
+
+"Chamber" thermistor in this configuration is a SMD thermistor on the PCB. It reads probably 15-20°C above the actual chamber temperature, when the stepper motors are enabled and running. To get better chamber temp readings, you can use TH_A or TH_B to connect a remote thermistor (in case you don't need those for monitoring the motor temperatures). Revision B of the GBB15 will be able to read a remote thermistor on the STOP2 (endstop) pin.
