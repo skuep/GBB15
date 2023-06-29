@@ -1,6 +1,7 @@
 # GBB15
 A gantry-mounted CAN stepper driver board for 15mm aluminum beams (mostly for PrintersForAnts printers). This is heavily work in progress.
 
+![GBB15 Photo](images/GBB15.jpg?raw=true "GBB15 Photo")
 
 ![PCB front side](images/PCB-front.png?raw=true "PCB front side")
 ![PCB back side](images/PCB-back.png?raw=true "PCB back side")
