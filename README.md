@@ -77,6 +77,7 @@ step_pin: gantry_mcu:PB2
 dir_pin: gantry_mcu:PB1
 enable_pin: !gantry_mcu:PB13
 endstop_pin: gantry_mcu:PA3 # this would be the STOP1 connector on GBB15 PCB
+#endstop_pin: gantry_mcu:PA2 # Alternatively STOP2 connector (Rev. B and up, PC13 on Rev. A)
 ...
 
 [tmc2209 stepper_y]
@@ -97,4 +98,4 @@ sense_resistor: 0.110
 
 ````
 
-"Chamber" thermistor in this configuration is a SMD thermistor on the PCB. It reads probably 15-20°C above the actual chamber temperature, when the stepper motors are enabled and running. To get better chamber temp readings, you can use TH_A or TH_B to connect a remote thermistor (in case you don't need those for monitoring the motor temperatures). Revision B of the GBB15 will be able to read a remote thermistor on the STOP2 (endstop) pin.
+"Chamber" thermistor in this configuration is a SMD thermistor on the PCB. It reads probably 15-20°C above the actual chamber temperature, when the stepper motors are enabled and running. To get better chamber temp readings, you can use TH_A or TH_B to connect a remote thermistor (in case you don't need those for monitoring the motor temperatures). Alternatively you can even use the STOP1 (All revisions) and STOP2 (Rev. B and up) pins for analog readings. Easiest is a through-hole 100K B3950 NTC crimped into a JST PH2.0 and connected to one of the mentioned header pins.
