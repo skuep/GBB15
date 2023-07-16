@@ -1,6 +1,10 @@
 # GBB15
 A gantry-mounted CAN stepper driver board for 15mm aluminum beams (mostly for PrintersForAnts printers). This is heavily work in progress.
 
+This board can be used e.g. for the Micron to have A/B motor controllers directly at the gantry. This reduces the number of wires required to be routed to the gantry.
+
+Additionally, this board can be used for Voron-0 or Tridents as a USB to CAN converter (using the Klipper CAN bridge option) with **included** A/B motor controllers.
+
 ![GBB15 Photo](images/GBB15.jpg?raw=true "GBB15 Photo")
 
 ![PCB front side](images/PCB-front.png?raw=true "PCB front side")
@@ -41,6 +45,17 @@ You can order these on LCSC
 1. Attach 1.5mm heat gap filler pad to bottom, cut to size if required using a sharp knife
 1. Poke screw holes into the gap filler pads
 1. Use M3x8mm screws to attach to bottom of gantry frame (see above)
+
+Note that thermal connection to the 15mm beam is required! Otherwise the Stepper motor controllers might overheat.
+
+![GBB15 Pinout](doc/GBB15-Pinout.png?raw=true "GBB15 Pinout")
+
+
+# Firmware
+1. Plug in USB cable, hold BOOT pushbutton, while tapping the RESET pushbutton and release all buttons. The GBB15 is now in DFU mode
+1. Build and upload CanBoot ([Click here](doc/GBB15-CanBoot.png) for CanBoot menuconfig settings)
+1. After re-plugging, the device boots into CanBoot mode and can be accessed using the CanBoot tools
+1. Build and upload Klipper ([Click here](doc/GBB15-klipper.png) for Klipper menuconfig settings)
 
 # Klipper configuration
 ````
