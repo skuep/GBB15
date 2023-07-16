@@ -41,21 +41,20 @@ You can order these on LCSC
 | 1.5mm M.2 Thermal pad    | 1   | Cut to size 67x15mm | -- | https://www.amazon.de/-/en/Assorted-Thickness-Conductive-Silicone-Conductivity/dp/B07X38254H/ref=sr_1_11 |
 
 # Quick Guide
-1. Solder top components (order: 120R resistor (if required), switches, 4x JST PH 2.0mm, 2x JST XH2.5mm, 2x MicroFit 3.0 2x2, Capacitors & attach heatsinks
+1. Solder top components (order: 120R resistor (if required), switches, 4x JST PH 2.0mm, 2x JST XH2.5mm, 2x MicroFit 3.0 2x2, Capacitors & attach heatsinks)
 1. Attach 1.5mm heat gap filler pad to bottom, cut to size if required using a sharp knife
 1. Poke screw holes into the gap filler pads
 1. Use M3x8mm screws to attach to bottom of gantry frame (see above)
 
 Note that thermal connection to the 15mm beam is required! Otherwise the Stepper motor controllers might overheat.
 
-![GBB15 Pinout](doc/GBB15-Pinout.png?raw=true "GBB15 Pinout")
-
-
 # Firmware
 1. Plug in USB cable, hold BOOT pushbutton, while tapping the RESET pushbutton and release all buttons. The GBB15 is now in DFU mode
 1. Build and upload CanBoot ([Click here](doc/GBB15-CanBoot.png) for CanBoot menuconfig settings)
 1. After re-plugging, the device boots into CanBoot mode and can be accessed using the CanBoot tools
 1. Build and upload Klipper ([Click here](doc/GBB15-klipper.png) for Klipper menuconfig settings)
+
+![GBB15 Pinout](doc/GBB15-Pinout.png?raw=true "GBB15 Pinout")
 
 # Klipper configuration
 ````
