@@ -56,14 +56,15 @@ Note that thermal connection to the 15mm beam is required! Otherwise the Stepper
     This means you would have only one shot at uploading a bootloader, while the flash is empty. If you choose to re-program the bootloader (e.g. other CAN speed), you cannot get into the DFU mode anymore.
     For enabling the "legacy" ``BOOT0`` pin functionality, you have two options.
     1. You can use STMicro's STM32CubeProgrammer software to disable the ``nBOOT_SEL`` option bit by following the screenshot [here](doc/BOOT0-Via-STM32CubeProgrammer.png).
-    1. Or if you prefer dfu-util, which is included (or easily installed) in major linux distros (e.g. Raspberry Pi OS), you can run the ``enable_boot.hex`` firmware from [here](https://github.com/olikraus/stm32g031/tree/main/enable_boot0). 
+    1. Or if you prefer ``dfu-util``, which is included (or easily installed) in major linux distros (e.g. Raspberry Pi OS), you can run the ``enable_boot.hex`` firmware from [here](https://github.com/olikraus/stm32g031/tree/main/enable_boot0). 
        It will clear the ``nBOOT_SEL`` option bit from within the firmware, if it is not yet cleared.
        Use the following commands to upload the file.
        ```` 
            objcopy --input-target=ihex --output-target=binary enable_boot0.hex enable_boot0.bin # Convert hex to binary
            sudo dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000:leave -D enable_boot0.bin
        ````
-       After waiting for a second, the ``BOOT0`` pin is now working again and you can continue normally. 
+       After waiting for a second, the ``BOOT0`` pin is now enabled again and you can continue normally. 
+
        **NOTE:** Before continuing, remember to set the GBB15 into DFU mode again using the BOOT/RESET pushbuttons (see above).
 
 1.  Build CanBoot according the instructions on the [CanBoot](https://github.com/Arksine/katapult) github page. 
@@ -72,26 +73,27 @@ Note that thermal connection to the 15mm beam is required! Otherwise the Stepper
 1.  Build the Klipper firmware according to the instructions on the [Klipper](https://www.klipper3d.org/Installation.html#building-and-flashing-the-micro-controller) github page.
     See [this](doc/GBB15-klipper.png) image for Klipper menuconfig settings to use.
 
-1.  Upload CanBoot to the GBB15 using either STM32CubeProgrammer (if you have it installed) or using ``dfu-util``.
-    Use this command-line for dfu-util:
+1.  Upload CanBoot to the GBB15 using either STM32CubeProgrammer (if you have it installed) or using ``dfu-util`` with these commands.
     ````
         sudo dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000:leave -D out/canboot.bin
     ````
     The device is now booted into CanBoot mode and can be accessed using the CanBoot tools.
 
-1.  Upload the Klipper firmware to the GBB15 using either ``flashtool.py`` as described [here](https://github.com/Arksine/katapult#uploading-klipper) or ``dfu-util``
+1.  Upload the Klipper firmware to the GBB15 using either CanBoot's ``flashtool.py`` as described [here](https://github.com/Arksine/katapult#uploading-klipper) or Klipper's ``make flash`` (uses ``dfu-util``).
     1.  Using ``flashtool.py`` via CAN. Run these commands from the ``CanBoot/scripts`` directory
         ````
             python3 flashtool.py -i can0 -q # Check the UUID of the GBB15 board
             python3 flashtool.py -i can0 -f ~/klipper/out/klipper.bin -u <uuid> # Insert UUID here
         ````
-    1.  Using ``dfu-util`` via Klipper Makefile. Run this command from the ``klipper`` directory.
+    1.  Using ``make flash`` via Klipper Makefile. Run this command from the ``klipper`` directory.
+
         **NOTE:** For this, you need to set the GBB15 into DFU mode again using the BOOT/RESET pushbuttons (see above).
         ````
             make flash FLASH_DEVICE=0483:df11
         ````
 
 # Pinout
+This image shows the pinout of the GBB15 PCB. The CAN connector layout is compatible to the BigTreeTech EBB36 board (among others).
 ![GBB15 Pinout](doc/GBB15-Pinout.png?raw=true "GBB15 Pinout")
 
 # Klipper configuration
@@ -105,6 +107,8 @@ canbus_uuid: f7b6d9f26b4a
 [temperature_sensor chamber]
 sensor_type: Generic 3950
 sensor_pin: gantry_mcu:PA1 # SMD thermistor on GBB15 PCB
+#sensor_pin: gantry_mcu:PA3 # Alternatively, this is STOP1 connector if it is not used otherwise
+#sensor_pin: gantry_mcu:PA2 # Alternatively, this is STOP2 connector if it is not used otherwise (for Rev. B and up) 
 pullup_resistor: 4700
 
 [temperature_sensor Motor_A]
@@ -155,4 +159,6 @@ sense_resistor: 0.110
 
 ````
 
-"Chamber" thermistor in this configuration is a SMD thermistor on the PCB. It reads probably 15-20°C above the actual chamber temperature, when the stepper motors are enabled and running. To get better chamber temp readings, you can use TH_A or TH_B to connect a remote thermistor (in case you don't need those for monitoring the motor temperatures). Alternatively you can even use the STOP1 (All revisions) and STOP2 (Rev. B and up) pins for analog readings. Easiest is a through-hole 100K B3950 NTC crimped into a JST PH2.0 and connected to one of the mentioned header pins.
+"Chamber" thermistor in this configuration is a SMD thermistor on the PCB. It reads probably 15-20°C above the actual chamber temperature, when the stepper motors are enabled and running. 
+- To get better chamber temp readings, you can use TH_A or TH_B to connect a remote thermistor (in case you don't need those for monitoring the motor temperatures). 
+- Alternatively you can (mis-)use the STOP1 (All revisions) and STOP2 (Rev. B and up) pins for analog readings. Easiest is a through-hole 100K B3950 NTC crimped into a JST PH2.0 and connected to one of the mentioned header pins.
