@@ -1,5 +1,5 @@
 # GBB15
-A gantry-mounted CAN stepper driver board for 15mm aluminum beams (mostly for PrintersForAnts printers). This is heavily work in progress.
+A gantry-mounted CAN stepper driver board for 15mm aluminum beams (mostly for PrintersForAnts printers). 
 
 This board can be used e.g. for the Micron to have A/B motor controllers directly at the gantry. This reduces the number of wires required to be routed to the gantry.
 
@@ -38,10 +38,10 @@ You can order these on LCSC
 | CAN termination resistor | 1   | Optional!   | C17909 | https://www.lcsc.com/product-detail/Chip-Resistor-Surface-Mount_UNI-ROYAL-Uniroyal-Elec-1206W4F1200T5E_C17909.html |
 | Tactile Switches         | 2   | Boot/Reset  | C255802 | https://www.lcsc.com/product-detail/Tactile-Switches_HYP-Hongyuan-Precision-1TS002E-2500-2501-CT_C255802.html |
 | Heat Sink                | 2   | Standard TMC2209 heatsink | C5250902 or C5250879 | https://www.lcsc.com/product-detail/Heat-sink-heatsink_wenhaoyongshun-D11-01-02_C5250902.html or https://www.lcsc.com/product-detail/Heat-sink-heatsink_wenhaoyongshun-F12-04-05_C5250879.html |
-| 1.5mm M.2 Thermal pad    | 1   | Cut to size 67x15mm | -- | https://www.amazon.de/-/en/Assorted-Thickness-Conductive-Silicone-Conductivity/dp/B07X38254H/ref=sr_1_11 |
+| 1.5mm M.2 Thermal pad    | 1   | Cut to size 67x15mm | -- | https://www.amazon.de/-/en/Assorted-Thickness-Conductive-Silicone-Conductivity/dp/B07X38254H (DE) or https://www.amazon.com/ADWITS-12-Pack-Conductive-Silicone-Conductivity/dp/B07X81PRK7 (US) |
 
 # Quick Guide
-1. Solder top components (order: 120R resistor (if required), switches, 4x JST PH 2.0mm, 2x JST XH2.5mm, 2x MicroFit 3.0 2x2, Capacitors & attach heatsinks)
+1. Solder top components (order: 120R resistor (if required), switches, 4x JST PH 2.0mm, 2x JST XH2.5mm, 2x MicroFit 3.0 2x2, USB connector, Capacitors & attach heatsinks)
 1. Attach 1.5mm heat gap filler pad to bottom, cut to size if required using a sharp knife
 1. Poke screw holes into the gap filler pads
 1. Use M3x8mm screws to attach to bottom of gantry frame (see above)
@@ -49,11 +49,49 @@ You can order these on LCSC
 Note that thermal connection to the 15mm beam is required! Otherwise the Stepper motor controllers might overheat.
 
 # Firmware
-1. Plug in USB cable, hold BOOT pushbutton, while tapping the RESET pushbutton and release all buttons. The GBB15 is now in DFU mode
-1. Build and upload CanBoot ([Click here](doc/GBB15-CanBoot.png) for CanBoot menuconfig settings)
-1. After re-plugging, the device boots into CanBoot mode and can be accessed using the CanBoot tools
-1. Build and upload Klipper ([Click here](doc/GBB15-klipper.png) for Klipper menuconfig settings)
+1.  Plug in USB cable and connect 24V power, the green LED on the bottom side (Rev. B and up) must light up.
+    Hold BOOT pushbutton, while tapping the RESET pushbutton and release all buttons. This is the sequence to set the GBB15 into DFU mode.
 
+    **IMPORTANT**: STMicro decided on the entire STM32G0 series to set the ``nBOOT_SEL`` option bit and thus disable the ``BOOT0`` pin by default.
+    This means you would have only one shot at uploading a bootloader, while the flash is empty. If you choose to re-program the bootloader (e.g. other CAN speed), you cannot get into the DFU mode anymore.
+    For enabling the "legacy" ``BOOT0`` pin functionality, you have two options.
+    1. You can use STMicro's STM32CubeProgrammer software to disable the ``nBOOT_SEL`` option bit by following the screenshot [here](doc/BOOT0-Via-STM32CubeProgrammer.png).
+    1. Or if you prefer dfu-util, which is included (or easily installed) in major linux distros (e.g. Raspberry Pi OS), you can run the ``enable_boot.hex`` firmware from [here](https://github.com/olikraus/stm32g031/tree/main/enable_boot0). 
+       It will clear the ``nBOOT_SEL`` option bit from within the firmware, if it is not yet cleared.
+       Use the following commands to upload the file.
+       ```` 
+           objcopy --input-target=ihex --output-target=binary enable_boot0.hex enable_boot0.bin # Convert hex to binary
+           sudo dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000:leave -D enable_boot0.bin
+       ````
+       After waiting for a second, the ``BOOT0`` pin is now working again and you can continue normally. 
+       **NOTE:** Before continuing, remember to set the GBB15 into DFU mode again using the BOOT/RESET pushbuttons (see above).
+
+1.  Build CanBoot according the instructions on the [CanBoot](https://github.com/Arksine/katapult) github page. 
+    See [this](doc/GBB15-CanBoot.png) image for CanBoot menuconfig settings to use.
+
+1.  Build the Klipper firmware according to the instructions on the [Klipper](https://www.klipper3d.org/Installation.html#building-and-flashing-the-micro-controller) github page.
+    See [this](doc/GBB15-klipper.png) image for Klipper menuconfig settings to use.
+
+1.  Upload CanBoot to the GBB15 using either STM32CubeProgrammer (if you have it installed) or using ``dfu-util``.
+    Use this command-line for dfu-util:
+    ````
+        sudo dfu-util -a 0 -d 0483:df11 --dfuse-address 0x08000000:leave -D out/canboot.bin
+    ````
+    The device is now booted into CanBoot mode and can be accessed using the CanBoot tools.
+
+1.  Upload the Klipper firmware to the GBB15 using either ``flashtool.py`` as described [here](https://github.com/Arksine/katapult#uploading-klipper) or ``dfu-util``
+    1.  Using ``flashtool.py`` via CAN. Run these commands from the ``CanBoot/scripts`` directory
+        ````
+            python3 flashtool.py -i can0 -q # Check the UUID of the GBB15 board
+            python3 flashtool.py -i can0 -f ~/klipper/out/klipper.bin -u <uuid> # Insert UUID here
+        ````
+    1.  Using ``dfu-util`` via Klipper Makefile. Run this command from the ``klipper`` directory.
+        **NOTE:** For this, you need to set the GBB15 into DFU mode again using the BOOT/RESET pushbuttons (see above).
+        ````
+            make flash FLASH_DEVICE=0483:df11
+        ````
+
+# Pinout
 ![GBB15 Pinout](doc/GBB15-Pinout.png?raw=true "GBB15 Pinout")
 
 # Klipper configuration
@@ -91,8 +129,9 @@ max_temp: 100
 step_pin: gantry_mcu:PB2
 dir_pin: gantry_mcu:PB1
 enable_pin: !gantry_mcu:PB13
-endstop_pin: gantry_mcu:PA3 # this would be the STOP1 connector on GBB15 PCB
-#endstop_pin: gantry_mcu:PA2 # Alternatively STOP2 connector (Rev. B and up, PC13 on Rev. A)
+endstop_pin: gantry_mcu:PA3 # This is the STOP1 connector on GBB15 PCB
+#endstop_pin: gantry_mcu:PA2 # Alternatively, this is STOP2 connector (for Rev. B and up, PC13 on Rev. A)
+#endstop_pin: gantry_mcu:PB0 # This is the DIAG pin of the TMC driver for sensorless homing
 ...
 
 [tmc2209 stepper_y]
@@ -104,6 +143,9 @@ sense_resistor: 0.110
 step_pin: gantry_mcu:PB7
 dir_pin: gantry_mcu:PB8
 enable_pin: !gantry_mcu:PB9
+endstop_pin: gantry_mcu:PA2 # This is STOP2 connector (for Rev. B and up, PC13 on Rev. A)
+#endstop_pin: gantry_mcu:PA3 # Alternatively, this is the STOP1 connector on GBB15 PCB
+#endstop_pin: gantry_mcu:PB5 # This is the DIAG pin of the TMC driver for sensorless homing
 ...
 
 [tmc2209 stepper_x]
