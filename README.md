@@ -135,12 +135,12 @@ dir_pin: gantry_mcu:PB1
 enable_pin: !gantry_mcu:PB13
 endstop_pin: gantry_mcu:PA3 # This is the STOP1 connector on GBB15 PCB
 #endstop_pin: gantry_mcu:PA2 # Alternatively, this is STOP2 connector (for Rev. B and up, PC13 on Rev. A)
-#endstop_pin: gantry_mcu:PB0 # This is the DIAG pin of the TMC driver for sensorless homing
 ...
 
 [tmc2209 stepper_y]
 uart_pin: gantry_mcu:PA4
 sense_resistor: 0.110
+diag_pin: gantry_mcu:PB0
 ...
 
 [stepper_x]
@@ -149,12 +149,12 @@ dir_pin: gantry_mcu:PB8
 enable_pin: !gantry_mcu:PB9
 endstop_pin: gantry_mcu:PA2 # This is STOP2 connector (for Rev. B and up, PC13 on Rev. A)
 #endstop_pin: gantry_mcu:PA3 # Alternatively, this is the STOP1 connector on GBB15 PCB
-#endstop_pin: gantry_mcu:PB5 # This is the DIAG pin of the TMC driver for sensorless homing
 ...
 
 [tmc2209 stepper_x]
 uart_pin: gantry_mcu:PB3
 sense_resistor: 0.110
+diag_pin: PB5
 ...
 
 ````
